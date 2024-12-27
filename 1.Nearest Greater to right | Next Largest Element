@@ -1,0 +1,23 @@
+https://www.geeksforgeeks.org/problems/next-larger-element-1587115620/1
+
+class Solution {
+  public:
+    vector<int> nextLargerElement(vector<int>& arr) {
+        vector<int>ans;
+        stack<int>st;
+        int n=arr.size();
+        for(int i=n-1;i>=0;i--){
+            while(st.size()){
+                if(st.top()>arr[i]){
+                    ans.push_back(st.top());
+                    break;
+                }
+                else st.pop();
+            }
+            if(st.size()==0)ans.push_back(-1);
+            st.push(arr[i]);
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
