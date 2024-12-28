@@ -1,0 +1,70 @@
+https://leetcode.com/problems/maximal-rectangle/description/
+
+
+class Solution {
+public:
+      vector<int>nearest_smaller_to_right(vector<int>&arr){
+        vector<int>ans;
+        stack<int>st;
+        int n=arr.size();
+        for(int i=n-1;i>=0;i--){
+            while(st.size()){
+                if(arr[st.top()]<arr[i]){
+                    ans.push_back(st.top());
+                    break;
+                }
+                else st.pop();
+            }
+            if(st.size()==0)ans.push_back(-1);
+            st.push(i);
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+    vector<int>nearest_smaller_to_left(vector<int>&arr){
+        vector<int>ans;
+        stack<int>st;
+        int n=arr.size();
+        for(int i=0;i<n;i++){
+            while(st.size()){
+                if(arr[st.top()]<arr[i]){
+                    ans.push_back(st.top());
+                    break;
+                }
+                else st.pop();
+            }
+            if(st.size()==0)ans.push_back(-1);
+            st.push(i);
+        }
+        return ans;
+    }
+    int largestRectangleArea(vector<int>& heights) {      
+        vector<int>three=nearest_smaller_to_right(heights);
+        vector<int>four=nearest_smaller_to_left(heights);
+        int n=heights.size();
+        if(n==1)return heights[0];
+        int ans=0;
+        for(int i=0;i<n;i++){
+            int c=three[i];
+            int d=four[i];
+            if(c==-1)c=n;
+            int t=(c-d-1)*heights[i];
+            ans=max(ans,t);
+        }
+        return ans;
+    }
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        int n=matrix[0].size();
+        vector<int>arr(n,0);
+        int ans=0;
+        for(int i=0;i<matrix.size();i++){
+            for(int j=0;j<n;j++){
+                if(matrix[i][j]=='0')arr[j]=0;
+                else arr[j]++;
+            }
+            int temp=largestRectangleArea(arr);
+            ans=max(ans,temp);
+        }
+        return ans;
+    }
+};
