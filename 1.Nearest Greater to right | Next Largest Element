@@ -21,3 +21,34 @@ class Solution {
         return ans;
     }
 };
+
+
+
+https://leetcode.com/problems/daily-temperatures/
+
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        //this question is basically a variation of nearest greater element 
+        //to right
+        //just here we store indexes of NGR and in original one we use to 
+        //store element
+        vector<int>ans;
+        stack<int>st;
+        int n=temperatures.size();
+        for(int i=n-1;i>=0;i--){
+            while(st.size()){
+                if(temperatures[st.top()]>temperatures[i]){
+                    ans.push_back(st.top()-i);
+                    break;
+                }
+                else st.pop();
+            }
+            if(st.size()==0)ans.push_back(0);
+            st.push(i);
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+
+    }
+};
