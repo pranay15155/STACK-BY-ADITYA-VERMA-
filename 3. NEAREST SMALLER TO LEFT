@@ -1,0 +1,17 @@
+vector<int> nextSmallerElement(vector<int> &arr, int n)
+{
+    vector<int>ans;
+    stack<int>st;
+    for(int i=0;i<n;i++){
+        while(st.size()){
+            if(st.top()<arr[i]){
+                ans.push_back(st.top());
+                break;
+            }
+            else st.pop();
+        }
+        if(st.size()==0)ans.push_back(-1);
+        st.push(arr[i]);
+    }
+    return ans;
+}
