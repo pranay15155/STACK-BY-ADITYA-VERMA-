@@ -1,0 +1,97 @@
+https://leetcode.com/problems/largest-rectangle-in-histogram/description/
+
+
+
+
+class Solution {
+public:
+    vector<int>nearest_greater_to_right(vector<int>&arr){
+        vector<int>ans;
+        stack<int>st;
+        int n=arr.size();
+        for(int i=n-1;i>=0;i--){
+            while(st.size()){
+                if(arr[st.top()]>arr[i]){
+                    ans.push_back(st.top());
+                    break;
+                }
+                else st.pop();
+            }
+            if(st.size()==0)ans.push_back(-1);
+            st.push(i);
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+    vector<int>nearest_greater_to_left(vector<int>&arr){
+        vector<int>ans;
+        stack<int>st;
+        int n=arr.size();
+        for(int i=0;i<n;i++){
+            while(st.size()){
+                if(arr[st.top()]>arr[i]){
+                    ans.push_back(st.top());
+                    break;
+                }
+                else st.pop();
+            }
+            if(st.size()==0)ans.push_back(-1);
+            st.push(i);
+        }
+        return ans;
+    }
+      vector<int>nearest_smaller_to_right(vector<int>&arr){
+        vector<int>ans;
+        stack<int>st;
+        int n=arr.size();
+        for(int i=n-1;i>=0;i--){
+            while(st.size()){
+                if(arr[st.top()]<arr[i]){
+                    ans.push_back(st.top());
+                    break;
+                }
+                else st.pop();
+            }
+            if(st.size()==0)ans.push_back(-1);
+            st.push(i);
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+    vector<int>nearest_smaller_to_left(vector<int>&arr){
+        vector<int>ans;
+        stack<int>st;
+        int n=arr.size();
+        for(int i=0;i<n;i++){
+            while(st.size()){
+                if(arr[st.top()]<arr[i]){
+                    ans.push_back(st.top());
+                    break;
+                }
+                else st.pop();
+            }
+            if(st.size()==0)ans.push_back(-1);
+            st.push(i);
+        }
+        return ans;
+    }
+    int largestRectangleArea(vector<int>& heights) {
+        vector<int>one=nearest_greater_to_right(heights);
+        vector<int>two=nearest_greater_to_left(heights);       
+        vector<int>three=nearest_smaller_to_right(heights);
+        vector<int>four=nearest_smaller_to_left(heights);
+        int n=heights.size();
+        if(n==1)return heights[0];
+        int ans=0;
+        for(int i=0;i<n;i++){
+            int a=one[i];
+            int b=two[i];
+            int c=three[i];
+            int d=four[i];
+            if(c==-1)c=n;
+            int t=(c-d-1)*heights[i];
+            ans=max(ans,t);
+        }
+        return ans;
+    }
+};
