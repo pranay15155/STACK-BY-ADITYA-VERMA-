@@ -1,5 +1,7 @@
 https://leetcode.com/problems/trapping-rain-water/description/
 
+i dont know why this question is in stack it has no concept regarding stack 
+it is a question of prefix max and suffix max
 class Solution {
 public:
     int trap(vector<int>& height) {
